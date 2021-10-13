@@ -10,6 +10,8 @@ topo :-
     record(Input),
     intersection(Input, L),
     list_to_set(L,S), % remove duplicates
+    length(S,Length),
+    writef('%1L\n', [Length]),
     output(S). % prints as descripted in the project description
 
 % record in the database
@@ -28,8 +30,11 @@ intersection([X|R], _) :-
 inrange(ret(_, X11, X12, Y11, Y12), ret(_,X21, X22, Y21, Y22)) :- true.
 
 % not working :(, but I'm close.
-make_pairs(_, [], NewPairs).
+make_pairs(_, [], _).
 make_pairs(ret(Name1,X11, X12, Y11, Y12), [ret(Name2,_,_,_,_)|R], Pairs) :- 
     append(Pairs, [[Name1, Name2]], NewPairs),
     write(NewPairs).
     make_pairs(ret(Name1,X11, X12, Y11, Y12), R, NewPairs).
+
+output([]).
+output([X|R]) :- writef('%1L%w\n', X), output(R).
