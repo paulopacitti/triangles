@@ -36,5 +36,11 @@ make_pairs(ret(Name1,X11, X12, Y11, Y12), [ret(Name2,_,_,_,_)|R], Pairs) :-
     write(NewPairs).
     make_pairs(ret(Name1,X11, X12, Y11, Y12), R, NewPairs).
 
+list_to_set([],_).
+list_to_set([[X,Y]|R],Set) :- 
+    (not(member([X,Y],[[X,Y]|R])), not(member([Y,X],[[X,Y]|R]))),
+    append(Set, [X,Y], NewSet),
+    list_to_set(R, NewSet).
+
 output([]).
 output([X|R]) :- writef('%1L%w\n', X), output(R).
