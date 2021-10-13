@@ -26,8 +26,11 @@ intersection([X|R], _) :-
     make_pairs(X, InRangeList, Pairs), % +Pairs is the array of pairs (X, RectangleThatIntercepts)
     intersection(R, Pairs). % recursion
 
-% draft functor, not working
-inrange(ret(_, X11, X12, Y11, Y12), ret(_,X21, X22, Y21, Y22)) :- true.
+% checks if two rectangles overlap
+inrange(ret(_, X11, Y11, X12, Y12), ret(_,X21, Y21, X22, Y22)) :- 
+    (X11 =:= X12; Y12 =:= Y11; X21 =:= X22; Y22 =:= Y21; X11 >= X22; X21 >= X12; Y11 >= Y22; Y21 >= Y12)
+    -> false
+    ; true.
 
 % not working :(, but I'm close.
 make_pairs(_, [], _).
